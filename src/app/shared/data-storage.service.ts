@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { RecipeService } from '../recipes/recipe.service';
-import { Recipe } from '../recipes/recipe.model';
+import { Injectable } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
+import { Recipe } from '../recipes/recipe.model';
+import { RecipeService } from '../recipes/recipe.service';
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class DataStorageService {
@@ -25,23 +26,20 @@ export class DataStorageService {
     const token = this.authService.getToken();
 
     return this.httpClient
-      .get<Recipe[]>('https://max-angular-tutorial-project.firebaseio.com/recipes.json?auth=' + token, {
-        observe: 'body',
-        responseType: 'json'
-      })
-      .map((response) => {
-        const recipes: Recipe[] = response.json();
+      .get<Recipe[]>(
+        'https://max-angular-tutorial-project.firebaseio.com/recipes.json?auth=' +
+          token
+      ).pipe(
+      map((recipes) => {
         for (const recipe of recipes) {
           if (!recipe.ingredients) {
             recipe.ingredients = [];
           }
         }
         return recipes;
-      })
-      .subscribe(
-          (recipes) => {
-              this.recipeService.setRecipes(recipes);
-          }
-      );
+      }))
+      .subscribe(recipes => {
+        this.recipeService.setRecipes(recipes);
+      });
   }
 }

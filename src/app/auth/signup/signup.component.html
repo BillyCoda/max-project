@@ -9,7 +9,7 @@
         <label for="password">Password</label>
         <input type="password" id="password" class="form-control" name="password" ngModel />
       </div>
-      <button type="submit" class="btn btn-primary">Sign up</button>
+      <button type="submit" class="btn btn-primary" [disabled]="!f.valid">Sign up</button>
     </form>
   </div>
 </div>

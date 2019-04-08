@@ -10,10 +10,10 @@ export class AppComponent implements OnInit {
   loadedFeature = 'recipe';
 
   ngOnInit() {
-    firebase.initializeApp(
+    firebase.initializeApp({
       apiKey: 'AIzaSyAEcJc2q2ELce1RAeYlSQ2gXeXhtkliyzg',
       authDomain: 'max-angular-tutorial-project.firebase.com'
-    );
+    });
   }
 
   onNavigate(feature: string) {

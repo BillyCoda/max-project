@@ -17,7 +17,7 @@ export class DataStorageService {
     const token = this.authService.getToken();
 
     return this.httpClient.put(
-      'https://max-angular-tutorial-project.firebaseio.com/recipes.json?auth=',
+      'https://max-angular-tutorial-project.firebaseio.com/recipes.json?auth=' + token,
       this.recipeService.getRecipes()
     );
   }
